@@ -17,28 +17,24 @@ and pick the file for your machine:
 
 | Your machine | Download |
 |---|---|
-| Mac with Apple Silicon (M1, M2, M3, M4) | `DRACOWING-<version>-mac-arm64.dmg` |
-| Mac with Intel | `DRACOWING-<version>-mac-x64.dmg` |
-| Windows (most PCs) | `DRACOWING-<version>-win-x64.exe` |
-| Windows on ARM (Snapdragon, Surface Pro X) | `DRACOWING-<version>-win-arm64.exe` |
-| Linux x86_64, any distribution | `DRACOWING-<version>-linux-x86_64.AppImage` |
-| Linux x86_64, Debian / Ubuntu | `DRACOWING-<version>-linux-amd64.deb` |
-| Linux ARM64 | `DRACOWING-<version>-linux-arm64.AppImage` or `.deb` |
+| Windows (most PCs, x64) | `DRACOWING-<version>-x64-setup.exe` |
+| Mac with Apple Silicon (M1, M2, M3, M4) | the `.dmg` |
+| Linux x86_64, any distribution | the `.AppImage`, or the `.tar.gz` folder |
+| Linux x86_64, Debian / Ubuntu | the `.deb` |
+| Linux x86_64, Fedora / RHEL | the `.rpm` |
 
 Not sure which Mac you have? Apple menu → **About This Mac**: "Chip: Apple M…" means Apple
-Silicon, "Processor: Intel" means Intel. Each Mac build also comes as a `.zip`, for anyone who
-prefers it to a disk image.
+Silicon. Intel Macs, Windows on ARM and Linux ARM64 have no build yet.
 
-## Before you install: Docker
+## Before you install
 
-**DRACOWING needs Docker.** The app is the front door: on first launch it checks for Docker,
-pulls the DRACOWING server containers (each pinned by digest), and starts them on your machine.
+**Windows and Linux:** nothing else is needed. The installer carries everything DRACOWING runs
+on your computer (its server, its database and its tools) and starts it as your own user.
 
-- **macOS / Windows:** install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-  and start it.
-- **Linux:** install Docker Engine and the compose plugin.
-
-The first-launch screen tells you exactly which check failed if Docker is missing or not running.
+**macOS:** DRACOWING needs [Docker Desktop](https://www.docker.com/products/docker-desktop/),
+installed and running. On first launch the app pulls the DRACOWING server containers (each
+pinned by digest) and starts them. The first-launch screen tells you exactly which check failed
+if Docker is missing or not running.
 
 ## Install
 
@@ -51,15 +47,17 @@ protected your PC". Click **More info → Run anyway**. You only see this once.
 **Linux, AppImage:**
 
 ```bash
-chmod +x DRACOWING-*-linux-x86_64.AppImage
-./DRACOWING-*-linux-x86_64.AppImage
+chmod +x DRACOWING-*.AppImage
+./DRACOWING-*.AppImage
 ```
 
 **Linux, deb:**
 
 ```bash
-sudo apt install ./DRACOWING-*-linux-amd64.deb
+sudo apt install ./dracowing_*_amd64.deb
 ```
+
+**Linux, rpm:** `sudo dnf install ./dracowing-*.rpm`
 
 ## Stable and pre-release
 
@@ -91,7 +89,7 @@ sha256sum -c SHA256SUMS.txt --ignore-missing      # macOS: shasum -a 256 -c SHA2
 `--ignore-missing` skips the files you did not download. Windows (PowerShell):
 
 ```powershell
-Get-FileHash .\DRACOWING-<version>-win-x64.exe -Algorithm SHA256
+Get-FileHash .\DRACOWING-<version>-x64-setup.exe -Algorithm SHA256
 ```
 
 Then compare the result with the matching line in `SHA256SUMS.txt`.
@@ -101,12 +99,11 @@ check.
 
 ## What each release contains
 
-Ten installers covering six platforms (macOS, Windows and Linux, each on x86_64 and arm64), plus
-`SHA256SUMS.txt`:
+Six installers, plus `SHA256SUMS.txt`:
 
-- macOS: `.dmg` and `.zip` for arm64 and x64
-- Windows: `.exe` installer for x64 and arm64
-- Linux: `.AppImage` and `.deb` for x86_64 and arm64
+- Windows x64: the `-setup.exe` installer
+- macOS Apple Silicon: the `.dmg`
+- Linux x86_64: `.AppImage`, `.deb`, `.rpm` and `.tar.gz`
 
 ## Links
 
